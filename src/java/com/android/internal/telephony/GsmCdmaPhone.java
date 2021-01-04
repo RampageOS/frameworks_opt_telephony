@@ -162,7 +162,7 @@ public class GsmCdmaPhone extends Phone {
     private String mMeid;
     // string to define how the carrier specifies its own ota sp number
     private String mCarrierOtaSpNumSchema;
-    private Boolean mUiccApplicationsEnabled = null;
+    protected Boolean mUiccApplicationsEnabled = null;
     // keeps track of when we have triggered an emergency call due to the ril.test.emergencynumber
     // param being set and we should generate a simulated exit from the modem upon exit of ECbM.
     private boolean mIsTestingEmergencyCallbackMode = false;
@@ -2832,13 +2832,11 @@ public class GsmCdmaPhone extends Phone {
                  keep the end of the version.
                 */
                 String version = (String)ar.result;
-                if (version != null) {
-                    int length = version.length();
-                    final int MAX_VERSION_LEN = SystemProperties.PROP_VALUE_MAX/2;
-                    TelephonyManager.from(mContext).setBasebandVersionForPhone(getPhoneId(),
-                            length <= MAX_VERSION_LEN ? version
-                                : version.substring(length - MAX_VERSION_LEN, length));
-                }
+                int length = version.length();
+                final int MAX_VERSION_LEN = SystemProperties.PROP_VALUE_MAX/2;
+                TelephonyManager.from(mContext).setBasebandVersionForPhone(getPhoneId(),
+                        length <= MAX_VERSION_LEN ? version
+                            : version.substring(length - MAX_VERSION_LEN, length));
             break;
 
             case EVENT_GET_IMEI_DONE:
