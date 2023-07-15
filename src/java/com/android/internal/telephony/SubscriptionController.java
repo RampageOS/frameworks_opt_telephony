@@ -921,6 +921,12 @@ public class SubscriptionController extends ISub.Stub {
         }
         return subList;
     }
+    
+    private List<SubscriptionInfo> makeCacheListCopyWithLock(List<SubscriptionInfo> cacheSubList) {
+        synchronized (mSubInfoListLock) {
+            return new ArrayList<>(cacheSubList);
+        }
+    }
 
     @Deprecated
     @UnsupportedAppUsage
